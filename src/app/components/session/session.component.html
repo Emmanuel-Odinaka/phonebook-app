@@ -1,0 +1,82 @@
+<h1>Phone book app</h1>
+<div class="form-container">
+  <form>
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" [(ngModel)]="item.name" name="name" />
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone number:</label>
+      <input type="number" id="phone" [(ngModel)]="item.phone" name="phone" />
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" [(ngModel)]="item.email" name="email" />
+    </div>
+    <div class="form-group">
+      <label for="birthday">Birthday:</label>
+      <input
+        type="date"
+        id="birthday"
+        [(ngModel)]="item.birthday"
+        name="birthday"
+      />
+    </div>
+    <div class="form-group">
+      <label for="address">Address:</label>
+      <input
+        type="text"
+        id="address"
+        [(ngModel)]="item.address"
+        name="address"
+      />
+    </div>
+    <button type="button" [disabled]="index >= 0" (click)="create()">
+      Create
+    </button>
+    <button type="button" [disabled]="index === -1" (click)="update()">
+      Update
+    </button>
+  </form>
+</div>
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Phone number</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let item of data; let i = index"
+        [class.selected]="index === i"
+        (click)="select(i)"
+      >
+        <td>{{ item.name }}</td>
+        <td>{{ item.phone }}</td>
+        <td>{{ item.email }}</td>
+        <td>
+          <button type="button" (click)="select(i)">Update</button>
+          <button type="button" (click)="delete(i)">Delete</button>
+          <button
+            type="button"
+            routerLink="/read"
+            [queryParams]="{
+              name: item.name,
+              email: item.email,
+              phone: item.phone,
+              address: item.address,
+              birthday: item.birthday
+            }"
+          >
+            Read
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
